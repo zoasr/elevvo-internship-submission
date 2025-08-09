@@ -30,15 +30,28 @@ jobs:
         with:
           bun-version: latest
 
+      # -------- Build and Deploy Landing Page -------- #
+      - name: Install and Build for landing-page
+        run: |
+          bun install
+          bun run build
+        working-directory: ./landing-page
+
+      - name: Deploy Landing Page to Root
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./landing-page/dist
+
       # -------- Deploy collapsible-sidebar -------- #
       - name: Deploy collapsible-sidebar to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./collapsible-sidebar
+          publish_dir: ./collapsible-sidebar/dist
           destination_dir: collapsible-sidebar
 
-      # -------- Deploy job-application-tracker -------- #
+      # -------- Build and Deploy job-application-tracker -------- #
       - name: Install and Build for job-application-tracker
         run: |
           bun install
@@ -52,7 +65,7 @@ jobs:
           publish_dir: ./job-application-tracker/dist
           destination_dir: job-application-tracker
 
-      # -------- Deploy taskflow-website -------- #
+      # -------- Build and Deploy taskflow-website -------- #
       - name: Install and Build for taskflow-website
         run: |
           bun install
