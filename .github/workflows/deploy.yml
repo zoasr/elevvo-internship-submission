@@ -33,7 +33,7 @@ jobs:
 
       # -------- Deploy collapsible-sidebar -------- #
       - name: Deploy collapsible-sidebar to GitHub Pages
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4
         with:
           name: collapsible-sidebar
           path: ./collapsible-sidebar/
@@ -54,7 +54,7 @@ jobs:
         working-directory: ./job-application-tracker
 
       - name: Upload job-application-tracker artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4
         with:
           name: job-application-tracker
           path: ./job-application-tracker/dist/
@@ -75,7 +75,7 @@ jobs:
         working-directory: ./taskflow-website
 
       - name: Upload taskflow-website artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4
         with:
           name: taskflow-website
           path: ./taskflow-website/dist/
