@@ -3,75 +3,85 @@ name: Deploy All the frontend apps to GitHub
 on:
     push:
         branches:
-            - main # branch you want to deply from
+            - main # branch you want to deploy from
+
+# Set the permissions at the workflow level
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        steps:
-            - name: Checkout Repo
-              uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'bun'
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "20"
+      # -------- Deploy collapsible-sidebar -------- #
+      - name: Deploy collapsible-sidebar to GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          name: collapsible-sidebar
+          path: ./collapsible-sidebar/
+          destination-dir: collapsible-sidebar
 
-            # -------- Deploy collapsible-sidebar -------- #
-            - name: Deploy collapsible-sidebar to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
-                  publish_dir: ./collapsible-sidebar
-                  destination_dir: collapsible-sidebar
-                  keep_files: false
+      # -------- Deploy job-application-tracker -------- #
+      - name: Setup Bun for job-application-tracker
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
-            # -------- Deploy job-application-tracker -------- #
-            - name: Install Dependencies for job-application-tracker
-              uses: oven-sh/setup-bun@v2
-              with:
-                  bun-version: latest
-              
-            - name: Install dependencies
-              run: bun install
-              working-directory: ./job-application-tracker
+      - name: Install dependencies for job-application-tracker
+        run: bun install
+        working-directory: ./job-application-tracker
 
-            - name: Build job-application-tracker
-              uses: oven-sh/setup-bun@v2
-              with:
-                  bun-version: latest
-              
-            - name: Build application
-              run: bun run build
-              working-directory: ./job-application-tracker
+      - name: Build job-application-tracker
+        run: bun run build
+        working-directory: ./job-application-tracker
 
-            - name: Deploy job-application-tracker to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
-                  publish_dir: ./job-application-tracker/dist
-                  destination_dir: job-application-tracker
-                  keep_files: false
+      - name: Upload job-application-tracker artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          name: job-application-tracker
+          path: ./job-application-tracker/dist/
+          destination-dir: job-application-tracker
 
-            # -------- Deploy taskflow-website -------- #
-            - name: Setup Bun for taskflow-website
-              uses: oven-sh/setup-bun@v2
-              with:
-                  bun-version: latest
-              
-            - name: Install Dependencies for taskflow-website
-              run: bun install
-              working-directory: ./taskflow-website
+      # -------- Deploy taskflow-website -------- #
+      - name: Setup Bun for taskflow-website
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
-            - name: Build taskflow-website
-              run: bun run build
-              working-directory: ./taskflow-website
+      - name: Install dependencies for taskflow-website
+        run: bun install
+        working-directory: ./taskflow-website
 
-            - name: Deploy taskflow-website to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
-                  publish_dir: ./taskflow-website/dist
-                  destination_dir: taskflow-website
-                  keep_files: false
+      - name: Build taskflow-website
+        run: bun run build
+        working-directory: ./taskflow-website
+
+      - name: Upload taskflow-website artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          name: taskflow-website
+          path: ./taskflow-website/dist/
+          destination-dir: taskflow-website
+
+      # Deploy all artifacts to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
