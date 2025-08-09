@@ -2,6 +2,8 @@ export type Job = {
 	id: string;
 	title: string;
 	company: string;
+	date: Date;
+	notes?: string;
 	status:
 		| "Applied"
 		| "Interviewing"

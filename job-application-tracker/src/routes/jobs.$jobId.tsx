@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import EditJobForm from "@/components/EditJobForm";
 import { useState } from "react";
+import { formatDate } from "date-fns";
 
 export const Route = createFileRoute("/jobs/$jobId")({
 	component: JobDetails,
@@ -49,7 +50,19 @@ function JobDetails() {
 				<CardDescription>{job.company}</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<Badge>{job.status}</Badge>
+				<div className="flex gap-2">
+					<Badge>{job.status}</Badge>
+					{job.date ? (
+						<Badge>
+							{formatDate(job.date, "dd'th' 'of' MMMM")}
+						</Badge>
+					) : null}
+				</div>
+				{job.notes ? (
+					<CardDescription className="p-2 text-2xl bg-input rounded-md mt-2 ring-2 ring-primary/20">
+						&quot; {job.notes} &quot;
+					</CardDescription>
+				) : null}
 			</CardContent>
 			<CardFooter className="flex gap-2 justify-end">
 				<Dialog open={open} onOpenChange={setOpen}>

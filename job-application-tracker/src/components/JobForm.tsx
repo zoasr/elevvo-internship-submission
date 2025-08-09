@@ -1,5 +1,4 @@
 import { useForm } from "@tanstack/react-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,9 +10,14 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "./ui/select";
+import { Calendar } from "./ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import type { Job } from "@/types/jobs";
 import { useJobsActions } from "@/store/jobs";
 import { useRouter } from "@tanstack/react-router";
+import { JobFormSchema } from "@/lib/schemas";
+import { format } from "date-fns";
+import { Textarea } from "./ui/textarea";
 
 export default function JobForm() {
 	const { addJob } = useJobsActions();
@@ -23,22 +27,14 @@ export default function JobForm() {
 			title: "",
 			company: "",
 			status: "Applied",
+			date: new Date(),
+			notes: "",
 		} as Omit<Job, "id">,
 		validators: {
-			onChange: z.object({
-				title: z.string(),
-				company: z.string(),
-				status: z.union([
-					z.literal("Applied"),
-					z.literal("Interviewing"),
-					z.literal("Offer"),
-					z.literal("Rejected"),
-					z.literal("Accepted"),
-					z.literal("Not selected by the employer"),
-				]),
-			}),
+			onChange: JobFormSchema,
 		},
 		onSubmit: ({ value }) => {
+			console.log(value);
 			addJob({ ...value, id: crypto.randomUUID() });
 			router.navigate({ to: "/" });
 			form.reset();
@@ -52,13 +48,18 @@ export default function JobForm() {
 				e.stopPropagation();
 				void form.handleSubmit();
 			}}
-			className="space-y-8 container mx-auto max-w-[720px]"
+			className="space-y-8 container mx-auto max-w-[720px] p-8 rounded-lg shadow-lg bg-card dark:bg-card-dark"
 		>
 			<form.Field
 				name="title"
 				children={(field) => (
-					<div>
-						<label htmlFor={field.name}>Title</label>
+					<div className="flex flex-col gap-2">
+						<label
+							htmlFor={field.name}
+							className="text-sm font-medium text-card-foreground dark:text-card-foreground-dark"
+						>
+							Title
+						</label>
 						<Input
 							id={field.name}
 							name={field.name}
@@ -66,10 +67,14 @@ export default function JobForm() {
 							onBlur={field.handleBlur}
 							onChange={(e) => field.handleChange(e.target.value)}
 							required
+							className="border border-input dark:border-input-dark rounded-md p-2 w-full"
 						/>
-						{field.state.meta.errors ? (
-							<em role="alert">
-								{field.state.meta.errors.join(", ")}
+						{field.state.meta.errors[0] ? (
+							<em
+								role="alert"
+								className="text-xs text-destructive dark:text-destructive-dark"
+							>
+								{field.state.meta.errors[0].message}
 							</em>
 						) : null}
 					</div>
@@ -78,8 +83,13 @@ export default function JobForm() {
 			<form.Field
 				name="company"
 				children={(field) => (
-					<div>
-						<label htmlFor={field.name}>Company</label>
+					<div className="flex flex-col gap-2">
+						<label
+							htmlFor={field.name}
+							className="text-sm font-medium text-card-foreground dark:text-card-foreground-dark"
+						>
+							Company
+						</label>
 						<Input
 							id={field.name}
 							name={field.name}
@@ -87,10 +97,85 @@ export default function JobForm() {
 							onBlur={field.handleBlur}
 							onChange={(e) => field.handleChange(e.target.value)}
 							required
+							className="border border-input dark:border-input-dark rounded-md p-2 w-full"
 						/>
-						{field.state.meta.errors ? (
-							<em role="alert">
-								{field.state.meta.errors.join(", ")}
+						{field.state.meta.errors[0] ? (
+							<em
+								role="alert"
+								className="text-xs text-destructive dark:text-destructive-dark"
+							>
+								{field.state.meta.errors[0].message}
+							</em>
+						) : null}
+					</div>
+				)}
+			/>
+			<form.Field
+				name="date"
+				children={(field) => (
+					<div className="flex flex-col gap-2">
+						<label
+							htmlFor={field.name}
+							className="text-sm font-medium text-card-foreground dark:text-card-foreground-dark"
+						>
+							Date
+						</label>
+						<Popover>
+							<PopoverTrigger asChild>
+								<Button
+									variant="outline"
+									className="w-full justify-start text-left font-normal"
+									aria-label="Select a date"
+								>
+									{field.state.value
+										? format(field.state.value, "PPP")
+										: "Select a date"}
+								</Button>
+							</PopoverTrigger>
+							<PopoverContent>
+								<Calendar
+									mode="single"
+									selected={field.state.value}
+									onSelect={field.handleChange}
+									defaultMonth={new Date()}
+									required
+								/>
+							</PopoverContent>
+						</Popover>
+						{field.state.meta.errors[0] ? (
+							<em
+								role="alert"
+								className="text-xs text-destructive dark:text-destructive-dark"
+							>
+								{field.state.meta.errors[0].message}
+							</em>
+						) : null}
+					</div>
+				)}
+			/>
+			<form.Field
+				name="notes"
+				children={(field) => (
+					<div className="flex flex-col gap-2">
+						<label
+							htmlFor={field.name}
+							className="text-sm font-medium text-card-foreground dark:text-card-foreground-dark"
+						>
+							Notes
+						</label>
+						<Textarea
+							onChange={(e) => field.handleChange(e.target.value)}
+							name={field.name}
+							id={field.name}
+							value={field.state.value}
+							placeholder="Add Job notes here..."
+						></Textarea>
+						{field.state.meta.errors[0] ? (
+							<em
+								role="alert"
+								className="text-xs text-destructive dark:text-destructive-dark"
+							>
+								{field.state.meta.errors[0].message}
 							</em>
 						) : null}
 					</div>
@@ -99,15 +184,13 @@ export default function JobForm() {
 			<form.Field
 				name="status"
 				children={(field) => (
-					<div>
-						<label htmlFor={field.name}>Status</label>
-						{/* <Select
-							id={field.name}
-							name={field.name}
-							value={field.state.value}
-							onBlur={field.handleBlur}
-							onChange={(e) => field.handleChange(e.target.value)}
-						/> */}
+					<div className="flex flex-col gap-2">
+						<label
+							htmlFor={field.name}
+							className="text-sm font-medium text-card-foreground dark:text-card-foreground-dark"
+						>
+							Status
+						</label>
 						<Select
 							onValueChange={(value: Job["status"]) =>
 								field.handleChange(value)
@@ -117,7 +200,7 @@ export default function JobForm() {
 							required
 						>
 							<SelectTrigger
-								className="w-[180px]"
+								className="w-full"
 								onBlur={field.handleBlur}
 								id={field.name}
 							>
@@ -145,15 +228,23 @@ export default function JobForm() {
 								</SelectGroup>
 							</SelectContent>
 						</Select>
-						{field.state.meta.errors ? (
-							<em role="alert">
-								{field.state.meta.errors.join(", ")}
+						{field.state.meta.errors[0] ? (
+							<em
+								role="alert"
+								className="text-xs text-destructive dark:text-destructive-dark"
+							>
+								{field.state.meta.errors[0].message}
 							</em>
 						) : null}
 					</div>
 				)}
 			/>
-			<Button type="submit">Submit</Button>
+			<Button
+				type="submit"
+				className="w-full bg-primary hover:bg-primary/90 text-primary-foreground dark:text-primary-foreground-dark font-bold py-2 px-4 rounded"
+			>
+				Submit
+			</Button>
 		</form>
 	);
 }

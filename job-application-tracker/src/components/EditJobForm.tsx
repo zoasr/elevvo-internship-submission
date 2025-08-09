@@ -1,5 +1,4 @@
 import { useForm } from "@tanstack/react-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useJobsActions } from "@/store/jobs";
@@ -13,6 +12,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "./ui/select";
+import { JobFormSchema } from "@/lib/schemas";
+import { Textarea } from "./ui/textarea";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "./ui/calendar";
 
 export default function EditJobForm({
 	job,
@@ -24,22 +28,13 @@ export default function EditJobForm({
 	const { updateJob } = useJobsActions();
 	const form = useForm({
 		validators: {
-			onChange: z.object({
-				title: z.string(),
-				company: z.string(),
-				status: z.union([
-					z.literal("Applied"),
-					z.literal("Interviewing"),
-					z.literal("Offer"),
-					z.literal("Rejected"),
-					z.literal("Accepted"),
-					z.literal("Not selected by the employer"),
-				]),
-			}),
+			onChange: JobFormSchema,
 		},
 		defaultValues: {
 			title: job.title,
 			company: job.company,
+			date: job.date || new Date(),
+			notes: job.notes || "",
 			status: job.status,
 		} as Omit<Job, "id">,
 		onSubmit: ({ value }) => {
@@ -70,9 +65,9 @@ export default function EditJobForm({
 							onChange={(e) => field.handleChange(e.target.value)}
 							required
 						/>
-						{field.state.meta.errors ? (
+						{field.state.meta.errors[0] ? (
 							<em role="alert">
-								{field.state.meta.errors.join(", ")}
+								{field.state.meta.errors[0].message}
 							</em>
 						) : null}
 					</div>
@@ -91,9 +86,80 @@ export default function EditJobForm({
 							onChange={(e) => field.handleChange(e.target.value)}
 							required
 						/>
-						{field.state.meta.errors ? (
+						{field.state.meta.errors[0] ? (
 							<em role="alert">
-								{field.state.meta.errors.join(", ")}
+								{field.state.meta.errors[0].message}
+							</em>
+						) : null}
+					</div>
+				)}
+			/>
+			<form.Field
+				name="date"
+				children={(field) => (
+					<div className="flex flex-col gap-2">
+						<label
+							htmlFor={field.name}
+							className="text-sm font-medium text-card-foreground dark:text-card-foreground-dark"
+						>
+							Date
+						</label>
+						<Popover>
+							<PopoverTrigger asChild>
+								<Button
+									variant="outline"
+									className="w-full justify-start text-left font-normal"
+									aria-label="Select a date"
+								>
+									{field.state.value
+										? format(field.state.value, "PPP")
+										: "Select a date"}
+								</Button>
+							</PopoverTrigger>
+							<PopoverContent>
+								<Calendar
+									mode="single"
+									selected={field.state.value}
+									onSelect={field.handleChange}
+									captionLayout="dropdown"
+									required
+								/>
+							</PopoverContent>
+						</Popover>
+						{field.state.meta.errors[0] ? (
+							<em
+								role="alert"
+								className="text-xs text-destructive dark:text-destructive-dark"
+							>
+								{field.state.meta.errors[0].message}
+							</em>
+						) : null}
+					</div>
+				)}
+			/>
+			<form.Field
+				name="notes"
+				children={(field) => (
+					<div className="flex flex-col gap-2">
+						<label
+							htmlFor={field.name}
+							className="text-sm font-medium text-card-foreground dark:text-card-foreground-dark"
+						>
+							Notes
+						</label>
+						<Textarea
+							onChange={(e) => field.handleChange(e.target.value)}
+							name={field.name}
+							id={field.name}
+							value={field.state.value}
+							placeholder="Add Job notes here..."
+						></Textarea>
+						{field.state.meta.errors[0] ? (
+							<em
+								role="alert"
+								className="text-xs text-destructive dark:text-destructive-dark"
+							>
+								{field.state.meta.errors[0].message}
 							</em>
 						) : null}
 					</div>
@@ -141,9 +207,9 @@ export default function EditJobForm({
 								</SelectGroup>
 							</SelectContent>
 						</Select>
-						{field.state.meta.errors ? (
+						{field.state.meta.errors[0] ? (
 							<em role="alert">
-								{field.state.meta.errors.join(", ")}
+								{field.state.meta.errors[0].message}
 							</em>
 						) : null}
 					</div>
