@@ -1,13 +1,21 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import {
+	RouterProvider,
+	createMemoryHistory,
+	createRouter,
+} from "@tanstack/react-router";
 import reportWebVitals from "./reportWebVitals.ts";
 
 import { routeTree } from "./routeTree.gen.ts";
 
 import "./styles.css";
 
+const memoryHistory = createMemoryHistory({
+	initialEntries: ["/elevvo-internship-submission/job-application-tracker/"],
+});
 const router = createRouter({
+	history: memoryHistory,
 	routeTree,
 	context: {},
 	defaultPreload: "intent",
@@ -29,7 +37,7 @@ if (rootElement && !rootElement.innerHTML) {
 	root.render(
 		<StrictMode>
 			<RouterProvider router={router} />
-		</StrictMode>
+		</StrictMode>,
 	);
 }
 
