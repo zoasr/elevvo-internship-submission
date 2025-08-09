@@ -1,0 +1,71 @@
+name: Deploy All the frontend apps to GitHub
+
+on:
+    push:
+        branches:
+            - main # branch you want to deply from
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v3
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20"
+
+            # -------- Deploy collapsible-sidebar -------- #
+            - name: Deploy collapsible-sidebar to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./collapsible-sidebar
+                  destination_dir: collapsible-sidebar
+
+            # -------- Deploy job-application-tracker -------- #
+            - name: Install Dependencies for job-application-tracker
+              uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: latest
+              run: bun install
+              working-directory: ./job-application-tracker
+
+            - name: Build job-application-tracker
+              uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: latest
+              run: bun run build
+              working-directory: ./job-application-tracker
+
+            - name: Deploy job-application-tracker to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./job-application-tracker/dist
+                  destination_dir: job-application-tracker
+
+            # -------- Deploy taskflow-website -------- #
+            - name: Install Dependencies for taskflow-website
+              uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: latest
+              run: bun install
+              working-directory: ./taskflow-website
+
+            - name: Build taskflow-website
+              uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: latest
+              run: bun run build
+              working-directory: ./taskflow-website
+
+            - name: Deploy taskflow-website to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./taskflow-website/dist
+                  destination_dir: taskflow-website
