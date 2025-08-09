@@ -31,6 +31,8 @@ jobs:
               uses: oven-sh/setup-bun@v2
               with:
                   bun-version: latest
+              
+            - name: Install dependencies
               run: bun install
               working-directory: ./job-application-tracker
 
@@ -38,6 +40,8 @@ jobs:
               uses: oven-sh/setup-bun@v2
               with:
                   bun-version: latest
+              
+            - name: Build application
               run: bun run build
               working-directory: ./job-application-tracker
 
@@ -49,17 +53,16 @@ jobs:
                   destination_dir: job-application-tracker
 
             # -------- Deploy taskflow-website -------- #
-            - name: Install Dependencies for taskflow-website
+            - name: Setup Bun for taskflow-website
               uses: oven-sh/setup-bun@v2
               with:
                   bun-version: latest
+              
+            - name: Install Dependencies for taskflow-website
               run: bun install
               working-directory: ./taskflow-website
 
             - name: Build taskflow-website
-              uses: oven-sh/setup-bun@v2
-              with:
-                  bun-version: latest
               run: bun run build
               working-directory: ./taskflow-website
 
