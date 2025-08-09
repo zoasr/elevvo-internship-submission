@@ -31,17 +31,11 @@ jobs:
           bun-version: latest
 
       # -------- Deploy collapsible-sidebar -------- #
-      - name: Install and Build for collapsible-sidebar
-        run: |
-          bun install
-          bun run build
-        working-directory: ./collapsible-sidebar
-
       - name: Deploy collapsible-sidebar to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./collapsible-sidebar/dist
+          publish_dir: ./collapsible-sidebar
           destination_dir: collapsible-sidebar
 
       # -------- Deploy job-application-tracker -------- #
