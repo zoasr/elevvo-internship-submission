@@ -2,6 +2,6 @@
   "name": "landing-page",
   "version": "1.0.0",
   "scripts": {
-    "build": "mkdir -p dist && cp index.html dist/index.html"
+    "build": "mkdir -p dist && cp index.html style.css dist/ && cp -r images dist/"
   }
 }
