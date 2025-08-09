@@ -22,9 +22,10 @@ jobs:
             - name: Deploy collapsible-sidebar to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
               with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
                   publish_dir: ./collapsible-sidebar
                   destination_dir: collapsible-sidebar
+                  keep_files: false
 
             # -------- Deploy job-application-tracker -------- #
             - name: Install Dependencies for job-application-tracker
@@ -48,9 +49,10 @@ jobs:
             - name: Deploy job-application-tracker to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
               with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
                   publish_dir: ./job-application-tracker/dist
                   destination_dir: job-application-tracker
+                  keep_files: false
 
             # -------- Deploy taskflow-website -------- #
             - name: Setup Bun for taskflow-website
@@ -69,6 +71,7 @@ jobs:
             - name: Deploy taskflow-website to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
               with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
                   publish_dir: ./taskflow-website/dist
                   destination_dir: taskflow-website
+                  keep_files: false
