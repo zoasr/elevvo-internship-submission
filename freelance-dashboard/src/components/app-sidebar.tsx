@@ -11,48 +11,51 @@ import {
 } from "@/components/ui/sidebar";
 import { BarChart3, Briefcase, User } from "lucide-react";
 import { NavItem } from "@/routes/__root";
+import { useMemo } from "react";
 export const AppSidebar = () => {
-	const items = [
-		{
-			title: "Overview",
-			url: "/",
-			icon: BarChart3,
-		},
-		{
-			title: "Projects",
-			url: "/projects",
-			icon: Briefcase,
-		},
-		{
-			title: "Profile",
-			url: "/profile",
-			icon: User,
-		},
-	];
+	const items = useMemo(
+		() => [
+			{
+				title: "Overview",
+				url: "/",
+				icon: BarChart3,
+			},
+			{
+				title: "Projects",
+				url: "/projects",
+				icon: Briefcase,
+			},
+			{
+				title: "Profile",
+				url: "/profile",
+				icon: User,
+			},
+		],
+		[]
+	);
+	const itemsEls = useMemo(() => {
+		return items.map((item) => (
+			<SidebarMenuItem key={item.title}>
+				<SidebarMenuButton asChild>
+					<NavItem to={item.url as keyof FileRoutesByTo}>
+						<span className="size-4">
+							<item.icon className="size-4" />
+						</span>
+						{item.title}
+					</NavItem>
+				</SidebarMenuButton>
+			</SidebarMenuItem>
+		));
+	}, [items]);
 	return (
 		<Sidebar>
 			<SidebarContent>
 				<SidebarGroup>
-					<SidebarGroupLabel>Application</SidebarGroupLabel>
+					<SidebarGroupLabel className="text-lg font-medium">
+						Navigation
+					</SidebarGroupLabel>
 					<SidebarGroupContent>
-						<SidebarMenu>
-							{items.map((item) => (
-								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton asChild>
-										<NavItem
-											to={
-												item.url as keyof FileRoutesByTo
-											}
-										>
-											<span className="size-4">
-												<item.icon className="size-4" />
-											</span>
-											{item.title}
-										</NavItem>
-									</SidebarMenuButton>
-								</SidebarMenuItem>
-							))}
-						</SidebarMenu>
+						<SidebarMenu>{itemsEls}</SidebarMenu>
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>
