@@ -19,7 +19,7 @@ type NotificationsState = {
 	};
 };
 
-const useNotificationsStore = create<NotificationsState>((set) => ({
+export const useNotificationsStore = create<NotificationsState>((set) => ({
 	notifications: [
 		{
 			id: "1",

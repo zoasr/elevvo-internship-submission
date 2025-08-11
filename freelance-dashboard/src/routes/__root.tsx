@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/popover";
 import { Bell } from "lucide-react";
 import { useNotifications, useNotificationsActions } from "@/store";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import { formatTime } from "@/lib/utils";
 
 export const Route = createRootRoute({
 	component: RootComponent,
@@ -44,8 +45,18 @@ export function NavItem({
 }
 
 const NotificationDropdown = memo(() => {
+	const [_, setupdated] = useState(false);
 	const notifications = useNotifications();
 	const { markAllAsRead, markAsRead } = useNotificationsActions();
+
+	// periodically rerender to update notification time
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setupdated((prev) => !prev);
+		}, 5000);
+		return () => clearInterval(interval);
+	}, []);
+
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
@@ -85,28 +96,33 @@ const NotificationDropdown = memo(() => {
 						</Button>
 					</div>
 					<ul className="max-h-[320px] overflow-auto p-2">
-						{notifications.map((n) => (
-							<li
-								key={n.id}
-								className={`flex items-start gap-3 rounded-md p-2 ${!n.read ? "bg-accent" : ""}`}
-								onClick={() => markAsRead(n.id)}
-							>
-								<div
-									className={`mt-0.5 h-2 w-2 rounded-full ${!n.read ? "bg-primary" : "bg-transparent"} flex-shrink-0`}
-								/>
-								<div className="grid gap-0.5">
-									<div className="text-sm font-medium leading-tight">
-										{n.title}
+						{notifications.map((n) => {
+							const timeDiff = formatTime(n.time);
+							return (
+								<li
+									key={n.id}
+									className={`flex items-start gap-3 rounded-md p-2 ${!n.read ? "bg-accent" : ""}`}
+									onClick={() => markAsRead(n.id)}
+								>
+									<div
+										className={`mt-0.5 h-2 w-2 rounded-full ${!n.read ? "bg-primary" : "bg-transparent"} flex-shrink-0`}
+									/>
+									<div className="grid gap-0.5">
+										<div className="text-sm font-medium leading-tight">
+											{n.title}
+										</div>
+										<div className="text-xs text-muted-foreground">
+											{n.description}
+										</div>
 									</div>
-									<div className="text-xs text-muted-foreground">
-										{n.description}
-									</div>
-								</div>
-								<div className="ml-auto text-xs text-muted-foreground whitespace-nowrap">
-									{n.time}
-								</div>
-							</li>
-						))}
+									{timeDiff && (
+										<div className="ml-auto text-xs text-muted-foreground whitespace-nowrap">
+											{timeDiff}
+										</div>
+									)}
+								</li>
+							);
+						})}
 					</ul>
 					<div className="border-t p-2 text-center">
 						<button className="text-xs text-primary hover:underline">

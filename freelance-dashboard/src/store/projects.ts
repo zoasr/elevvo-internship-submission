@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { useNotificationsStore } from "./notifications";
 
 type Project = {
 	id: string;
@@ -56,14 +57,32 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
 		},
 	],
 	actions: {
-		addProject: (project) =>
-			set((state) => ({ projects: [...state.projects, project] })),
-		updateProjectStatus: (projectId, status) =>
+		addProject: (project) => {
+			set((state) => ({ projects: [...state.projects, project] }));
+			useNotificationsStore.getState().actions.addNotification({
+				title: "Project Added",
+				description: `Project ${project.name} added successfully`,
+				time: new Date().toISOString(),
+			});
+		},
+		updateProjectStatus: (projectId, status) => {
+			const project = useProjectsStore
+				.getState()
+				.projects.find((p) => p.id === projectId);
+			if (!project) {
+				return;
+			}
 			set((state) => ({
 				projects: state.projects.map((p) =>
 					p.id === projectId ? { ...p, status } : p
 				),
-			})),
+			}));
+			useNotificationsStore.getState().actions.addNotification({
+				title: "Project Status Updated",
+				description: `Project ${project.name} status updated to ${status}`,
+				time: new Date().toISOString(),
+			});
+		},
 	},
 }));
 
