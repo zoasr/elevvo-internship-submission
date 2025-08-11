@@ -1,12 +1,13 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource-variable/roboto";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
 	--font-sans:
-		ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
-		Arial, "Apple Color Emoji", "Segoe UI Emoji";
+		"Roboto Variable", ui-sans-serif, system-ui, -apple-system, Segoe UI,
+		Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 :root {
