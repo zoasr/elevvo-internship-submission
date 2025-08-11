@@ -12,19 +12,11 @@ import {
 	Pie,
 	Cell,
 } from "recharts";
+import { useEarnings, useProjects } from "@/store";
 
 export const Route = createFileRoute("/")({
 	component: RouteComponent,
 });
-
-const earnings = [
-	{ month: "Jan", amt: 1200 },
-	{ month: "Feb", amt: 2100 },
-	{ month: "Mar", amt: 800 },
-	{ month: "Apr", amt: 1600 },
-	{ month: "May", amt: 2400 },
-	{ month: "Jun", amt: 1900 },
-];
 
 const tasks = [
 	{ name: "Design", value: 6 },
@@ -37,7 +29,9 @@ function StatCard({ title, value }: { title: string; value: string }) {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle className="text-sm text-gray-500 font-normal">{title}</CardTitle>
+				<CardTitle className="text-sm text-gray-500 font-normal">
+					{title}
+				</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<div className="text-2xl font-semibold">{value}</div>
@@ -47,11 +41,39 @@ function StatCard({ title, value }: { title: string; value: string }) {
 }
 
 function RouteComponent() {
+	const projects = useProjects();
+	const totalEarnings = useEarnings();
+
+	const monthlyEarnings = projects.reduce(
+		(acc, project) => {
+			const month = new Date(project.startDate).toLocaleString(
+				"default",
+				{ month: "short" }
+			);
+			if (acc[month]) {
+				acc[month] += project.earnings;
+			} else {
+				acc[month] = project.earnings;
+			}
+			return acc;
+		},
+		{} as Record<string, number>
+	);
+
+	const earningsData = Object.entries(monthlyEarnings).map(
+		([month, amt]) => ({ month, amt })
+	);
 	return (
 		<div className="space-y-6">
 			<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-				<StatCard title="Total Projects" value="12" />
-				<StatCard title="Earnings (YTD)" value="$9,000" />
+				<StatCard
+					title="Total Projects"
+					value={projects.length.toString()}
+				/>
+				<StatCard
+					title="Earnings (YTD)"
+					value={`${totalEarnings.toLocaleString()}`}
+				/>
 				<StatCard title="Tasks Due" value="7" />
 				<StatCard title="Active Clients" value="5" />
 			</div>
@@ -64,12 +86,16 @@ function RouteComponent() {
 					<CardContent>
 						<div className="h-64">
 							<ResponsiveContainer width="100%" height="100%">
-								<RBarChart data={earnings}>
+								<RBarChart data={earningsData}>
 									<CartesianGrid strokeDasharray="3 3" />
 									<XAxis dataKey="month" />
 									<YAxis />
 									<Tooltip />
-									<Bar dataKey="amt" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+									<Bar
+										dataKey="amt"
+										fill="#3b82f6"
+										radius={[4, 4, 0, 0]}
+									/>
 								</RBarChart>
 							</ResponsiveContainer>
 						</div>
@@ -83,9 +109,23 @@ function RouteComponent() {
 						<div className="h-64">
 							<ResponsiveContainer width="100%" height="100%">
 								<PieChart>
-									<Pie data={tasks} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80} paddingAngle={4}>
-										{tasks.map((entry, index) => (
-											<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+									<Pie
+										data={tasks}
+										dataKey="value"
+										nameKey="name"
+										innerRadius={50}
+										outerRadius={80}
+										paddingAngle={4}
+									>
+										{tasks.map((_, index) => (
+											<Cell
+												key={"cell-${index}"}
+												fill={
+													COLORS[
+														index % COLORS.length
+													]
+												}
+											/>
 										))}
 									</Pie>
 									<Tooltip />

@@ -9,21 +9,13 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import { Check, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useProjects } from "@/store";
 
 export const Route = createFileRoute("/projects")({
 	component: RouteComponent,
 });
-
-const data = [
-	{
-		name: "Marketing Website",
-		status: "In Progress",
-		deadline: "2025-08-30",
-	},
-	{ name: "Mobile App MVP", status: "On Hold", deadline: "2025-09-12" },
-	{ name: "Brand Refresh", status: "Completed", deadline: "2025-07-22" },
-	{ name: "E-commerce Revamp", status: "In Review", deadline: "2025-09-05" },
-];
 
 function StatusBadge({ status }: { status: string }) {
 	const map: Record<
@@ -31,22 +23,31 @@ function StatusBadge({ status }: { status: string }) {
 		{
 			variant?: BadgeVariants;
 			className?: string;
+			icon?: React.ReactNode;
 		}
 	> = {
-		Completed: { variant: "success" },
-		"In Progress": { variant: "default" },
-		"In Review": { variant: "warning" },
-		"On Hold": { variant: "destructive" },
+		Completed: { variant: "success", icon: <Check /> },
+		"In Progress": { variant: "default", icon: <Clock /> },
+		"In Review": { variant: "warning", icon: <Clock /> },
+		"On Hold": { variant: "destructive", icon: <Clock /> },
 	};
-	const { variant = "default", className } = map[status] ?? {};
+	const { variant = "default", className, icon } = map[status] ?? {};
 	return (
-		<Badge variant={variant} className={className}>
+		<Badge variant={variant} className={cn(className, "w-[100px]")}>
+			{icon}
 			{status}
 		</Badge>
 	);
 }
 
 function RouteComponent() {
+	const projects = useProjects();
+
+	const statusMap: Record<string, string> = {
+		"in-progress": "In Progress",
+		completed: "Completed",
+		"on-hold": "On Hold",
+	};
 	return (
 		<div className="space-y-4">
 			<div className="flex items-center justify-between">
@@ -64,16 +65,16 @@ function RouteComponent() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{data.map((p) => (
-							<TableRow key={p.name}>
+						{projects.map((p) => (
+							<TableRow key={p.id}>
 								<TableCell className="font-medium text-gray-900">
 									{p.name}
 								</TableCell>
 								<TableCell>
-									<StatusBadge status={p.status} />
+									<StatusBadge status={statusMap[p.status]} />
 								</TableCell>
 								<TableCell className="text-gray-700">
-									{p.deadline}
+									{p.endDate}
 								</TableCell>
 							</TableRow>
 						))}

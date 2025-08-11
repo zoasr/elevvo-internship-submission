@@ -8,6 +8,16 @@ import type { FileRoutesByTo } from "../routeTree.gen";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 
+import { Button } from "@/components/ui/button";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import { Bell } from "lucide-react";
+import { useNotifications, useNotificationsActions } from "@/store";
+import { memo } from "react";
+
 export const Route = createRootRoute({
 	component: RootComponent,
 });
@@ -24,7 +34,7 @@ export function NavItem({
 	return (
 		<Link
 			to={to}
-			className="flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 [&.active]:bg-gray-200"
+			className="flex items-center gap-2 rounded-md px-3 py-2 text-sm bg-accent hover:bg-primary [&.active]:bg-primary [&.active]:text-primary-foreground hover:text-primary-foreground transition-[background-color,color] duration-100 [timing-function:ease-in-out]"
 			activeProps={{ className: "active font-medium" }}
 			onClick={onNavigate}
 		>
@@ -32,6 +42,82 @@ export function NavItem({
 		</Link>
 	);
 }
+
+const NotificationDropdown = memo(() => {
+	const notifications = useNotifications();
+	const { markAllAsRead, markAsRead } = useNotificationsActions();
+	return (
+		<Popover>
+			<PopoverTrigger asChild>
+				<Button
+					variant="ghost"
+					size="icon"
+					className="h-9 w-9 relative"
+					aria-label="Notifications"
+				>
+					<Bell />
+					{notifications.filter((n) => !n.read).length > 0 && (
+						<span className="absolute top-0 right-0 rounded-full bg-primary text-primary-foreground aspect-square w-4 flex-shrink-0">
+							{notifications.filter((n) => !n.read).length}
+						</span>
+					)}
+				</Button>
+			</PopoverTrigger>
+			<PopoverContent asChild>
+				<div className=" mt-2 w-80 rounded-md border bg-white shadow-lg focus:outline-none">
+					<div className="p-3 border-b flex items-center justify-between">
+						<div>
+							<div className="text-sm font-medium">
+								Notifications
+							</div>
+							<div className="text-xs text-muted-foreground">
+								You have{" "}
+								{notifications.filter((n) => !n.read).length}{" "}
+								unread messages.
+							</div>
+						</div>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => markAllAsRead()}
+						>
+							Mark all as read
+						</Button>
+					</div>
+					<ul className="max-h-[320px] overflow-auto p-2">
+						{notifications.map((n) => (
+							<li
+								key={n.id}
+								className={`flex items-start gap-3 rounded-md p-2 ${!n.read ? "bg-accent" : ""}`}
+								onClick={() => markAsRead(n.id)}
+							>
+								<div
+									className={`mt-0.5 h-2 w-2 rounded-full ${!n.read ? "bg-primary" : "bg-transparent"} flex-shrink-0`}
+								/>
+								<div className="grid gap-0.5">
+									<div className="text-sm font-medium leading-tight">
+										{n.title}
+									</div>
+									<div className="text-xs text-muted-foreground">
+										{n.description}
+									</div>
+								</div>
+								<div className="ml-auto text-xs text-muted-foreground whitespace-nowrap">
+									{n.time}
+								</div>
+							</li>
+						))}
+					</ul>
+					<div className="border-t p-2 text-center">
+						<button className="text-xs text-primary hover:underline">
+							View all
+						</button>
+					</div>
+				</div>
+			</PopoverContent>
+		</Popover>
+	);
+});
 
 function RootComponent() {
 	const { matches } = useRouterState();
@@ -42,9 +128,14 @@ function RootComponent() {
 				<header className="sticky top-0 z-10 border-b bg-white/80 backdrop-blur">
 					<div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-3 px-4">
 						<SidebarTrigger />
-						<div className="font-semibold">Freelance Admin</div>
-						<div className="ml-auto text-sm text-gray-500">
-							{matches[matches.length - 1].fullPath}
+						<div className="font-semibold">
+							Freelance Admin Dashboard
+						</div>
+						<div className="ml-auto flex items-center gap-2">
+							<NotificationDropdown />
+							<div className="text-sm text-accent-foreground bg-accent px-2 py-1 rounded-md ring-2 ring-primary/30">
+								{matches[matches.length - 1].fullPath}
+							</div>
 						</div>
 					</div>
 				</header>
