@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type Notification = {
+export type Notification = {
 	id: string;
 	title: string;
 	description: string;

@@ -15,8 +15,12 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Bell } from "lucide-react";
-import { useNotifications, useNotificationsActions } from "@/store";
-import { memo, useEffect, useState } from "react";
+import {
+	useNotifications,
+	useNotificationsActions,
+	type Notification,
+} from "@/store";
+import { memo, useEffect, useMemo, useState } from "react";
 import { formatTime } from "@/lib/utils";
 
 export const Route = createRootRoute({
@@ -44,18 +48,64 @@ export function NavItem({
 	);
 }
 
-const NotificationDropdown = memo(() => {
-	const [_, setupdated] = useState(false);
-	const notifications = useNotifications();
-	const { markAllAsRead, markAsRead } = useNotificationsActions();
+const NotificationItem = memo(
+	({ notification: n }: { notification: Notification }) => {
+		const [_, setupdate] = useState(false);
+		const { markAsRead } = useNotificationsActions();
 
-	// periodically rerender to update notification time
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setupdated((prev) => !prev);
-		}, 5000);
-		return () => clearInterval(interval);
-	}, []);
+		useEffect(() => {
+			const interval = setInterval(() => {
+				setupdate((prev) => !prev);
+			}, 5000);
+			return () => clearInterval(interval);
+		}, []);
+
+		const timeDiff = formatTime(n.time);
+		return (
+			<li
+				key={n.id}
+				className={`flex items-start gap-3 rounded-md p-2 hover:bg-accent ${!n.read ? "bg-accent" : ""}`}
+				onClick={() => markAsRead(n.id)}
+			>
+				<div
+					className={`mt-0.5 h-2 w-2 rounded-full ${!n.read ? "bg-primary" : "bg-transparent"} flex-shrink-0`}
+				/>
+				<div className="grid gap-0.5">
+					<div className="text-sm font-medium leading-tight">
+						{n.title}
+					</div>
+					<div className="text-xs text-muted-foreground">
+						{n.description}
+					</div>
+				</div>
+				{timeDiff && (
+					<div className="ml-auto text-xs text-muted-foreground whitespace-nowrap">
+						{timeDiff}
+					</div>
+				)}
+			</li>
+		);
+	}
+);
+
+const NotificationDropdown = memo(() => {
+	const [page, setPage] = useState(0);
+	const notifications = useNotifications();
+	const { markAllAsRead } = useNotificationsActions();
+
+	const pageSize = 5;
+	const limitedNotifications = useMemo(
+		() => notifications.slice(page * pageSize, (page + 1) * pageSize),
+		[notifications, page]
+	);
+
+	const notificationsEls = useMemo(
+		() =>
+			limitedNotifications.map((n) => (
+				<NotificationItem notification={n} />
+			)),
+		[limitedNotifications]
+	);
 
 	return (
 		<Popover>
@@ -95,39 +145,31 @@ const NotificationDropdown = memo(() => {
 							Mark all as read
 						</Button>
 					</div>
-					<ul className="max-h-[320px] overflow-auto p-2">
-						{notifications.map((n) => {
-							const timeDiff = formatTime(n.time);
-							return (
-								<li
-									key={n.id}
-									className={`flex items-start gap-3 rounded-md p-2 ${!n.read ? "bg-accent" : ""}`}
-									onClick={() => markAsRead(n.id)}
-								>
-									<div
-										className={`mt-0.5 h-2 w-2 rounded-full ${!n.read ? "bg-primary" : "bg-transparent"} flex-shrink-0`}
-									/>
-									<div className="grid gap-0.5">
-										<div className="text-sm font-medium leading-tight">
-											{n.title}
-										</div>
-										<div className="text-xs text-muted-foreground">
-											{n.description}
-										</div>
-									</div>
-									{timeDiff && (
-										<div className="ml-auto text-xs text-muted-foreground whitespace-nowrap">
-											{timeDiff}
-										</div>
-									)}
-								</li>
-							);
-						})}
+					<ul className="max-h-[320px] overflow-auto p-2 divide-y divide-gray-200 space-y-2">
+						{notificationsEls.length > 0 ? (
+							notificationsEls
+						) : (
+							<li className="p-2 text-center">
+								No More Notifications
+							</li>
+						)}
 					</ul>
 					<div className="border-t p-2 text-center">
-						<button className="text-xs text-primary hover:underline">
-							View all
-						</button>
+						{page > 0 ? (
+							<button
+								className="text-xs text-primary hover:underline"
+								onClick={() => setPage((prev) => prev - 1)}
+							>
+								View previous
+							</button>
+						) : (
+							<button
+								className="text-xs text-primary hover:underline"
+								onClick={() => setPage((prev) => prev + 1)}
+							>
+								View more
+							</button>
+						)}
 					</div>
 				</div>
 			</PopoverContent>
