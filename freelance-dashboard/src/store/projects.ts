@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { useNotificationsStore } from "./notifications";
 
-type Project = {
+export type Project = {
 	id: string;
 	name: string;
 	status: "in-progress" | "completed" | "on-hold";
@@ -14,6 +14,8 @@ type ProjectsState = {
 	projects: Project[];
 	actions: {
 		addProject: (project: Project) => void;
+		editProject: (projectId: string, project: Partial<Project>) => void;
+		deleteProject: (projectId: string) => void;
 		updateProjectStatus: (
 			projectId: string,
 			status: Project["status"]
@@ -21,7 +23,7 @@ type ProjectsState = {
 	};
 };
 
-export const useProjectsStore = create<ProjectsState>((set) => ({
+export const useProjectsStore = create<ProjectsState>((set, get) => ({
 	projects: [
 		{
 			id: "1",
@@ -65,10 +67,38 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
 				time: new Date().toISOString(),
 			});
 		},
+		editProject: (projectId, project) => {
+			const oldProject = get().projects.find((p) => p.id === projectId);
+			if (!oldProject) {
+				return;
+			}
+			set((state) => ({
+				projects: state.projects.map((p) =>
+					p.id === projectId ? { ...p, ...project } : p
+				),
+			}));
+			useNotificationsStore.getState().actions.addNotification({
+				title: "Project Updated",
+				description: `Project ${project.name} updated successfully`,
+				time: new Date().toISOString(),
+			});
+		},
+		deleteProject: (projectId) => {
+			const project = get().projects.find((p) => p.id === projectId);
+			if (!project) {
+				return;
+			}
+			set((state) => ({
+				projects: state.projects.filter((p) => p.id !== projectId),
+			}));
+			useNotificationsStore.getState().actions.addNotification({
+				title: "Project Deleted",
+				description: `Project ${project.name} deleted successfully`,
+				time: new Date().toISOString(),
+			});
+		},
 		updateProjectStatus: (projectId, status) => {
-			const project = useProjectsStore
-				.getState()
-				.projects.find((p) => p.id === projectId);
+			const project = get().projects.find((p) => p.id === projectId);
 			if (!project) {
 				return;
 			}

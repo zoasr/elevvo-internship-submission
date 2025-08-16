@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Check, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useProjects, useProjectsActions } from "@/store";
+import { useProjects, useProjectsActions, type Project } from "@/store";
 import {
 	Dialog,
 	DialogContent,
@@ -27,6 +27,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
 
 export const Route = createFileRoute("/projects")({
 	component: RouteComponent,
@@ -34,9 +35,10 @@ export const Route = createFileRoute("/projects")({
 
 const NewProjectDialog = () => {
 	const { addProject } = useProjectsActions();
+	const [open, setOpen] = useState(false);
 
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button>New Project</Button>
 			</DialogTrigger>
@@ -55,6 +57,7 @@ const NewProjectDialog = () => {
 							endDate: e.currentTarget.endDate.value,
 							earnings: Number(e.currentTarget.earnings.value),
 						});
+						setOpen(false);
 					}}
 				>
 					<div className="space-y-2 mb-2">
@@ -103,6 +106,81 @@ const NewProjectDialog = () => {
 	);
 };
 
+function EditProjectDialog({ project }: { project: Project }) {
+	const { editProject } = useProjectsActions();
+	const [open, setOpen] = useState(false);
+	return (
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DialogTrigger asChild>
+				<Button>Edit Project</Button>
+			</DialogTrigger>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>Edit Project</DialogTitle>
+				</DialogHeader>
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						editProject(project.id, {
+							name: e.currentTarget.projectName.value,
+							status: e.currentTarget.status.value,
+							startDate: e.currentTarget.startDate.value,
+							endDate: e.currentTarget.endDate.value,
+							earnings: Number(e.currentTarget.earnings.value),
+						});
+						setOpen(false);
+					}}
+				>
+					<div className="space-y-2 mb-2">
+						<Input
+							type="text"
+							name="projectName"
+							placeholder="Project Name"
+							required
+							defaultValue={project.name}
+						/>
+						<Select name="status" defaultValue={project.status}>
+							<SelectTrigger>
+								<SelectValue placeholder="Select a status" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="in-progress">
+									In Progress
+								</SelectItem>
+								<SelectItem value="completed">
+									Completed
+								</SelectItem>
+								<SelectItem value="on-hold">On Hold</SelectItem>
+							</SelectContent>
+						</Select>
+						<Input
+							type="date"
+							name="startDate"
+							placeholder="Start Date"
+							required
+							defaultValue={project.startDate}
+						/>
+						<Input
+							type="date"
+							name="endDate"
+							placeholder="End Date"
+							defaultValue={project.endDate}
+						/>
+						<Input
+							type="number"
+							name="earnings"
+							placeholder="Earnings"
+							min={1}
+							defaultValue={project.earnings}
+						/>
+					</div>
+					<Button type="submit">Save Changes</Button>
+				</form>
+			</DialogContent>
+		</Dialog>
+	);
+}
+
 function StatusBadge({ status }: { status: string }) {
 	const map: Record<
 		string,
@@ -128,6 +206,7 @@ function StatusBadge({ status }: { status: string }) {
 
 function RouteComponent() {
 	const projects = useProjects();
+	const { deleteProject } = useProjectsActions();
 
 	const statusMap: Record<string, string> = {
 		"in-progress": "In Progress",
@@ -148,6 +227,7 @@ function RouteComponent() {
 							<TableHead>Project</TableHead>
 							<TableHead>Status</TableHead>
 							<TableHead>Deadline</TableHead>
+							<TableHead>Actions</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -161,6 +241,15 @@ function RouteComponent() {
 								</TableCell>
 								<TableCell className="text-gray-700">
 									{p.endDate}
+								</TableCell>
+								<TableCell className="flex gap-2">
+									<EditProjectDialog project={p} />
+									<Button
+										variant="destructive"
+										onClick={() => deleteProject(p.id)}
+									>
+										Delete
+									</Button>
 								</TableCell>
 							</TableRow>
 						))}
