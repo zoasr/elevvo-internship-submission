@@ -12,7 +12,7 @@ import {
 	Pie,
 	Cell,
 } from "recharts";
-import { useEarnings, useProjects } from "@/store";
+import { useEarnings, useNotifications, useProjects } from "@/store";
 
 export const Route = createFileRoute("/")({
 	component: RouteComponent,
@@ -42,6 +42,7 @@ function StatCard({ title, value }: { title: string; value: string }) {
 
 function RouteComponent() {
 	const projects = useProjects();
+	const notifications = useNotifications();
 	const totalEarnings = useEarnings();
 
 	const monthlyEarnings = projects.reduce(
@@ -141,11 +142,15 @@ function RouteComponent() {
 					<CardTitle>Recent Activity</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<ul className="space-y-2 text-sm text-gray-700">
-						<li>• Invoice #1023 paid by Acme Co.</li>
-						<li>• New project brief received from Nova Studio</li>
-						<li>• Task "Homepage Hero" due tomorrow</li>
-						<li>• Sent proposal to Orbit Labs</li>
+					<ul className="space-y-2 text-sm text-gray-700 list-disc px-4">
+						{notifications.map((n) => (
+							<li key={n.id}>
+								<div className="font-medium">{n.title}</div>
+								<div className="text-xs text-muted-foreground">
+									{n.description}
+								</div>
+							</li>
+						))}
 					</ul>
 				</CardContent>
 			</Card>
