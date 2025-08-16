@@ -1,9 +1,14 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import {
+	RouterProvider,
+	createHashHistory,
+	createRouter,
+} from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 
+const hashHistory = createHashHistory();
 const router = createRouter({
 	routeTree,
 	context: {},
@@ -11,6 +16,7 @@ const router = createRouter({
 	scrollRestoration: true,
 	defaultStructuralSharing: true,
 	defaultPreloadStaleTime: 0,
+	history: hashHistory,
 	basepath: "/elevvo-internship-submission/freelance-dashboard/",
 });
 
