@@ -14,7 +14,7 @@ import { formatDate } from "date-fns";
 
 export default function JobCard({ job }: { job: Job }) {
 	return (
-		<Card>
+		<Card className="grid border-2 border-ring">
 			<CardHeader>
 				<CardTitle>{job.title}</CardTitle>
 				<CardDescription>{job.company}</CardDescription>
@@ -29,7 +29,7 @@ export default function JobCard({ job }: { job: Job }) {
 					) : null}
 				</div>
 				{job.notes ? (
-					<CardDescription className="p-2 text-2xl bg-input rounded-[5px] mt-2 ring-2 ring-primary/20">
+					<CardDescription className="p-2 text-2xl bg-input rounded-[5px] mt-4 ring-2 ring-ring/30">
 						&quot; {job.notes} &quot;
 					</CardDescription>
 				) : null}
