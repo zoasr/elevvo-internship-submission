@@ -21,6 +21,9 @@ export default function Header() {
 					<NavigationMenuLink asChild>
 						<Link to="/add-job">Add Job</Link>
 					</NavigationMenuLink>
+					<NavigationMenuLink asChild>
+						<Link to="/export-import">Export/Import Data</Link>
+					</NavigationMenuLink>
 				</NavigationMenuList>
 			</NavigationMenu>
 		</header>

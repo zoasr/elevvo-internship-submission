@@ -8,6 +8,7 @@ type JobsStore = {
 		addJob: (job: Job) => void;
 		deleteJob: (job: Job) => void;
 		updateJob: (job: Job) => void;
+		setJobs: (jobs: Job[]) => void;
 	};
 };
 
@@ -28,6 +29,7 @@ const useJobsStore = create<JobsStore>()(
 							j.id === job.id ? job : j
 						),
 					})),
+				setJobs: (jobs) => set({ jobs }),
 			},
 		}),
 		{

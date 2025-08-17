@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ExportImportRouteImport } from './routes/export-import'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AddJobRouteImport } from './routes/add-job'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as JobsJobIdRouteImport } from './routes/jobs.$jobId'
 
+const ExportImportRoute = ExportImportRouteImport.update({
+  id: '/export-import',
+  path: '/export-import',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/add-job': typeof AddJobRoute
   '/dashboard': typeof DashboardRoute
+  '/export-import': typeof ExportImportRoute
   '/jobs/$jobId': typeof JobsJobIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add-job': typeof AddJobRoute
   '/dashboard': typeof DashboardRoute
+  '/export-import': typeof ExportImportRoute
   '/jobs/$jobId': typeof JobsJobIdRoute
 }
 export interface FileRoutesById {
@@ -52,25 +60,40 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/add-job': typeof AddJobRoute
   '/dashboard': typeof DashboardRoute
+  '/export-import': typeof ExportImportRoute
   '/jobs/$jobId': typeof JobsJobIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/add-job' | '/dashboard' | '/jobs/$jobId'
+  fullPaths: '/' | '/add-job' | '/dashboard' | '/export-import' | '/jobs/$jobId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/add-job' | '/dashboard' | '/jobs/$jobId'
-  id: '__root__' | '/' | '/add-job' | '/dashboard' | '/jobs/$jobId'
+  to: '/' | '/add-job' | '/dashboard' | '/export-import' | '/jobs/$jobId'
+  id:
+    | '__root__'
+    | '/'
+    | '/add-job'
+    | '/dashboard'
+    | '/export-import'
+    | '/jobs/$jobId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddJobRoute: typeof AddJobRoute
   DashboardRoute: typeof DashboardRoute
+  ExportImportRoute: typeof ExportImportRoute
   JobsJobIdRoute: typeof JobsJobIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/export-import': {
+      id: '/export-import'
+      path: '/export-import'
+      fullPath: '/export-import'
+      preLoaderRoute: typeof ExportImportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -106,6 +129,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddJobRoute: AddJobRoute,
   DashboardRoute: DashboardRoute,
+  ExportImportRoute: ExportImportRoute,
   JobsJobIdRoute: JobsJobIdRoute,
 }
 export const routeTree = rootRouteImport

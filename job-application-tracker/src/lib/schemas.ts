@@ -14,3 +14,7 @@ export const JobFormSchema = z.object({
 		z.literal("Not selected by the employer"),
 	]),
 });
+
+export const JobExportSchema = JobFormSchema.extend({
+	id: z.string(),
+}).array();
