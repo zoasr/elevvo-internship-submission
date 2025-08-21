@@ -106,3 +106,17 @@ jobs:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./sass-landing-page/dist
                   destination_dir: sass-landing-page
+
+            # -------- Build and Deploy weather-dashboard -------- #
+            - name: Install and Build for weather-dashboard
+              run: |
+                  bun install
+                  bun run build
+              working-directory: ./weather-dashboard
+
+            - name: Deploy weather-dashboard to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./weather-dashboard/dist
+                  destination_dir: weather-dashboard
