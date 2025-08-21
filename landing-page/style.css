@@ -1,174 +1,282 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap");
 
-:root{
-    --color-primary: #fca311;
-    --color-secondary: #000000;
-    --color-text-primary: #000;
-    --color-text-secondary: #fff;
+:root {
+	--color-primary: #fca311;
+	--color-secondary: #000000;
+	--color-text-primary: #000;
+	--color-text-secondary: #fff;
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--color-primary);
-    color: var(--color-text-primary);
-    margin: 0;
-    padding: 40px;
-    display: flex;
-    justify-content: center;
+	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Helvetica, Arial, sans-serif;
+	background-color: var(--color-primary);
+	color: var(--color-text-primary);
+	margin: 0;
+	padding: 40px;
+	display: flex;
+	justify-content: center;
 }
 
 .container {
-    max-width: 960px;
-    width: 100%;
+	max-width: 960px;
+	width: 100%;
 }
 
 header {
-    text-align: center;
-    margin-bottom: 50px;
-    border-bottom: 1px solid #000;
-    box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.1);
+	text-align: center;
+	margin-bottom: 50px;
+	border-bottom: 1px solid #000;
+	box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    font-family: 'Roboto Slab', serif;
-    font-size: 2.8em;
-    font-weight: 700;
-    color: #000000;
-    margin-bottom: 10px;
+	font-family: "Roboto Slab", serif;
+	font-size: 2.8em;
+	font-weight: 700;
+	color: #000000;
+	margin-bottom: 10px;
 }
 
 header p {
-    font-size: 1.1em;
-    color: #000000; /* Black paragraph text */
+	font-size: 1.1em;
+	color: #000000; /* Black paragraph text */
 }
 
 .submission-context {
-    background-color: var(--color-secondary);
-    color: var(--color-text-secondary);
-    padding: 30px;
-    border-radius: 12px;
-    margin-bottom: 50px;
-    text-align: center;
+	background-color: var(--color-secondary);
+	color: var(--color-text-secondary);
+	padding: 30px;
+	border-radius: 12px;
+	margin-bottom: 50px;
+	text-align: center;
 }
 
 .submission-context h2 {
-    font-family: 'Roboto Slab', serif;
-    font-size: 1.8em;
-    margin-top: 0;
-    margin-bottom: 15px;
+	font-family: "Roboto Slab", serif;
+	font-size: 1.8em;
+	margin-top: 0;
+	margin-bottom: 15px;
 }
 
 .submission-context p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    max-width: 700px;
-    margin: 0 auto 15px auto;
+	font-size: 1.1em;
+	line-height: 1.6;
+	max-width: 700px;
+	margin: 0 auto 15px auto;
 }
 
 .submission-context a {
-    color: #fca311;
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.3s;
+	color: #fca311;
+	font-weight: 600;
+	text-decoration: none;
+	transition: color 0.3s;
 }
 
 .submission-context a:hover {
-    color: #ffffff;
-    text-decoration: underline;
+	color: #ffffff;
+	text-decoration: underline;
 }
 
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 30px;
+	position: relative;
+}
+
+/* Add visual grouping by level */
+.project-card.card-level-1 {
+	border-left: 4px solid #dbeafe;
+}
+
+.project-card.card-level-2 {
+	border-left: 4px solid #fde68a;
+}
+
+.project-card.card-level-3 {
+	border-left: 4px solid #fca5a5;
+}
+
+/* Add level headers within the grid */
+.level-header {
+	grid-column: 1 / -1;
+	text-align: center;
+	margin: 20px 0;
+	padding: 15px;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.level-header h3 {
+	font-family: "Roboto Slab", serif;
+	font-size: 1.4em;
+	margin: 0;
+	color: #000;
+}
+
+.level-header.level-1 h3 {
+	color: #1f2937;
+}
+
+.level-header.level-2 h3 {
+	color: #92400e;
+}
+
+.level-header.level-3 h3 {
+	color: #991b1b;
+}
+
+.group {
+	margin-bottom: 50px;
+}
+
+.group > h2 {
+	font-family: "Roboto Slab", serif;
+	font-size: 1.6em;
+	margin: 0 0 16px 0;
 }
 
 .project-card {
-    background-color: var(--color-secondary);
-    color: var(--color-text-secondary);
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    padding: 25px;
-    text-align: left;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    display: flex;
-    flex-direction: column;
+	background-color: var(--color-secondary);
+	color: var(--color-text-secondary);
+	border-radius: 12px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	padding: 25px;
+	text-align: left;
+	transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+	display: flex;
+	flex-direction: column;
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+	transform: translateY(-5px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
 .project-card img {
-    width: 100%;
-    /* height: 180px;  */
-    aspect-ratio: 16/10;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    background-color: #333;
+	width: 100%;
+	/* height: 180px;  */
+	aspect-ratio: 16/10;
+	object-fit: cover;
+	border-radius: 8px;
+	margin-bottom: 20px;
+	background-color: #333;
 }
 
 .project-card h2 {
-    font-family: 'Roboto Slab', serif;
-    font-size: 1.5em;
-    font-weight: 700;
-    color: #ffffff;
-    margin-top: 0;
-    margin-bottom: 15px;
+	font-family: "Roboto Slab", serif;
+	font-size: 1.5em;
+	font-weight: 700;
+	color: #ffffff;
+	margin-top: 0;
+	margin-bottom: 15px;
+}
+
+.project-card .meta {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+	margin: 0 0 10px 0;
+}
+
+.tag {
+	display: inline-block;
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.2px;
+}
+
+.tag-level.level-1 {
+	background: #1f2937;
+	color: #dbeafe;
+}
+.tag-level.level-2 {
+	background: #1f2937;
+	color: #fde68a;
+}
+.tag-level.level-3 {
+	background: #1f2937;
+	color: #fca5a5;
+}
+
+.tag-hardness.beginner {
+	background: #234;
+	color: #b9e1ff;
+}
+.tag-hardness.intermediate {
+	background: #342;
+	color: #ffe6a6;
+}
+.tag-hardness.advanced {
+	background: #412;
+	color: #ffb3b3;
+}
+
+.tag-usefulness.low {
+	background: #222;
+	color: #ddd;
+}
+.tag-usefulness.medium {
+	background: #333;
+	color: #fff;
+}
+.tag-usefulness.high {
+	background: #fca311;
+	color: #000;
 }
 
 .project-card p {
-    font-size: 1em;
-    line-height: 1.5;
-    color: #e0e0e0;
-    margin-bottom: 20px;
-    flex-grow: 1;
+	font-size: 1em;
+	line-height: 1.5;
+	color: #e0e0e0;
+	margin-bottom: 20px;
+	flex-grow: 1;
 }
 
 .project-card a {
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--color-primary);
-    color: var(--color-text-primary);
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color 0.3s;
+	display: inline-flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--color-primary);
+	color: var(--color-text-primary);
+	padding: 10px 20px;
+	border-radius: 8px;
+	text-decoration: none;
+	font-weight: 600;
+	transition: background-color 0.3s;
 
-    & .arrow{
-        display: grid;
-        place-items: center;
-        scale: 0;
-        transform-origin: -30% 50%;
-        opacity: 0;
-        transition: scale 0.3s, opacity 0.3s;
-        font-size: 1.5em;
-        vertical-align: middle;
-        line-height: 0.5lh;
-    }
-    &:hover .arrow{
-        scale: 1;
-        opacity: 1;
-    }
+	& .arrow {
+		display: grid;
+		place-items: center;
+		scale: 0;
+		transform-origin: -30% 50%;
+		opacity: 0;
+		transition: scale 0.3s, opacity 0.3s;
+		font-size: 1.5em;
+		vertical-align: middle;
+		line-height: 0.5lh;
+	}
+	&:hover .arrow {
+		scale: 1;
+		opacity: 1;
+	}
 }
 
 .project-card a:hover {
-    background-color: #e0e0e0;
+	background-color: #e0e0e0;
 }
 
 .by {
-    font-size: 0.5em;
-    font-style: normal;
-    /* text-decoration: none; */
-    color: inherit;
-    text-wrap: nowrap;
-    &:hover{
-        font-style: italic;
-    }
+	font-size: 0.5em;
+	font-style: normal;
+	/* text-decoration: none; */
+	color: inherit;
+	text-wrap: nowrap;
+	&:hover {
+		font-style: italic;
+	}
 }
-
-
