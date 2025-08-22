@@ -23,9 +23,7 @@ export default function JobCard({ job }: { job: Job }) {
 				<div className="flex gap-2">
 					<Badge>{job.status}</Badge>
 					{job.date ? (
-						<Badge>
-							{formatDate(job.date, "dd'th' 'of' MMMM")}
-						</Badge>
+						<Badge>{formatDate(job.date, "do 'of' MMMM")}</Badge>
 					) : null}
 				</div>
 				{job.notes ? (
