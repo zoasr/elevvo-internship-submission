@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>FlowSync - Streamline Your Workflow</title>
+		<link rel="icon" type="image/svg+xml" href="/elevvo-internship-submission/sass-landing-page/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+		<script type="module" crossorigin src="/elevvo-internship-submission/sass-landing-page/assets/index-C86d2Ixu.js"></script>
+		<link rel="stylesheet" crossorigin href="/elevvo-internship-submission/sass-landing-page/assets/index-Br8Z5TB-.css">
+	</head>
+	<body class="antialiased">
+		<nav
+			class="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50 transition-shadow dark:shadow-ring/30"
+		>
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex justify-between items-center h-16">
+					<div class="flex items-center">
+						<div
+							aria-roledescription="mobile-menu-button"
+							role="button"
+							id="mobile-menu-button"
+							class="md:hidden p-2 rounded-md text-foreground hover:bg-accent mr-2"
+							aria-label="Toggle menu"
+							aria-expanded="false"
+						>
+							<svg
+								class="h-6 w-6 transform transition-transform duration-200"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+							>
+								<path class="top-bar" d="M4 6h16" />
+								<path class="middle-bar" d="M4 12h16" />
+								<path class="bottom-bar" d="M4 18h16" />
+							</svg>
+						</div>
+						<div class="flex-shrink-0">
+							<h1 class="text-2xl font-bold text-primary">
+								FlowSync
+							</h1>
+						</div>
+						<div class="hidden md:block ml-10">
+							<div class="flex items-baseline space-x-8">
+								<a
+									href="#features"
+									class="text-foreground hover:text-primary transition-colors"
+									>Features</a
+								>
+								<a
+									href="#testimonials"
+									class="text-foreground hover:text-primary transition-colors"
+									>Testimonials</a
+								>
+								<a
+									href="#pricing"
+									class="text-foreground hover:text-primary transition-colors"
+									>Pricing</a
+								>
+							</div>
+						</div>
+					</div>
+					<div class="flex items-center space-x-4">
+						<button
+							id="theme-toggle"
+							class="p-2 size-12 rounded-md bg-muted hover:bg-accent hover:text-accent-foreground aspect-square"
+						>
+							<i class="fas fa-sun text-lg" id="theme-icon"></i>
+						</button>
+						<button
+							class="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90"
+						>
+							Get Started
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Mobile menu -->
+			<div
+				id="mobile-menu"
+				class="md:hidden hidden bg-background border-t border-border"
+			>
+				<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+					<a
+						href="#features"
+						class="block px-3 py-2 text-foreground hover:bg-muted rounded-md"
+						>Features</a
+					>
+					<a
+						href="#testimonials"
+						class="block px-3 py-2 text-foreground hover:bg-muted rounded-md"
+						>Testimonials</a
+					>
+					<a
+						href="#pricing"
+						class="block px-3 py-2 text-foreground hover:bg-muted rounded-md"
+						>Pricing</a
+					>
+				</div>
+			</div>
+		</nav>
+
+		<section class="pt-24 pb-16 bg-gradient-to-br from-background to-muted">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="grid lg:grid-cols-2 gap-12 items-center">
+					<div class="animate-fade-in-up">
+						<h1
+							class="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight"
+						>
+							Streamline Your
+							<span class="text-primary">Workflow</span>
+							Like Never Before
+						</h1>
+						<p
+							class="text-xl text-muted-foreground mb-8 leading-relaxed"
+						>
+							FlowSync revolutionizes team collaboration with
+							intelligent automation, real-time insights, and
+							seamless integrations. Boost productivity by 300%
+							and eliminate workflow bottlenecks.
+						</p>
+						<div class="flex flex-col sm:flex-row gap-4">
+							<button
+								class="bg-primary text-primary-foreground px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary/90"
+							>
+								Start Free Trial
+							</button>
+							<button
+								class="border border-border text-foreground px-8 py-4 rounded-lg text-lg font-semibold hover:bg-muted"
+							>
+								Watch Demo
+							</button>
+						</div>
+						<div
+							class="flex items-center mt-8 space-x-6 text-sm text-muted-foreground"
+						>
+							<div class="flex items-center">
+								<i class="fas fa-check text-primary mr-2"></i>
+								14-day free trial
+							</div>
+							<div class="flex items-center">
+								<i class="fas fa-check text-primary mr-2"></i>
+								No credit card required
+							</div>
+						</div>
+					</div>
+					<div class="relative">
+						<div
+							class="bg-card rounded-2xl p-8 shadow-2xl border border-border"
+						>
+							<img
+								src="/elevvo-internship-submission/sass-landing-page/placeholder.svg?height=400&width=500"
+								alt="FlowSync Dashboard"
+								class="w-full h-auto rounded-lg"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="features" class="py-20 bg-background">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="text-center mb-16">
+					<h2
+						class="text-3xl md:text-4xl font-bold text-foreground mb-4"
+					>
+						Powerful Features for Modern Teams
+					</h2>
+					<p class="text-xl text-muted-foreground max-w-3xl mx-auto">
+						Everything you need to transform your workflow and
+						accelerate your team's success
+					</p>
+				</div>
+
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+					<div
+						class="bg-card rounded-xl p-8 border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+					>
+						<div
+							class="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center mb-6"
+						>
+							<i class="fas fa-robot text-2xl text-primary"></i>
+						</div>
+						<h3
+							class="text-xl font-semibold text-card-foreground mb-4"
+						>
+							AI-Powered Automation
+						</h3>
+						<p class="text-muted-foreground leading-relaxed">
+							Intelligent workflows that learn from your patterns
+							and automate repetitive tasks, saving hours of
+							manual work every day.
+						</p>
+					</div>
+
+					<div
+						class="bg-card rounded-xl p-8 border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+					>
+						<div
+							class="bg-secondary/10 w-16 h-16 rounded-lg flex items-center justify-center mb-6"
+						>
+							<i
+								class="fas fa-chart-line text-2xl text-secondary"
+							></i>
+						</div>
+						<h3
+							class="text-xl font-semibold text-card-foreground mb-4"
+						>
+							Real-Time Analytics
+						</h3>
+						<p class="text-muted-foreground leading-relaxed">
+							Get instant insights into team performance, project
+							progress, and bottlenecks with beautiful, actionable
+							dashboards.
+						</p>
+					</div>
+
+					<div
+						class="bg-card rounded-xl p-8 border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+					>
+						<div
+							class="bg-accent/10 w-16 h-16 rounded-lg flex items-center justify-center mb-6"
+						>
+							<i class="fas fa-plug text-2xl text-accent"></i>
+						</div>
+						<h3
+							class="text-xl font-semibold text-card-foreground mb-4"
+						>
+							Seamless Integrations
+						</h3>
+						<p class="text-muted-foreground leading-relaxed">
+							Connect with 500+ tools including Slack, GitHub,
+							Figma, and more. Your existing workflow,
+							supercharged.
+						</p>
+					</div>
+
+					<div
+						class="bg-card rounded-xl p-8 border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+					>
+						<div
+							class="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center mb-6"
+						>
+							<i class="fas fa-users text-2xl text-primary"></i>
+						</div>
+						<h3
+							class="text-xl font-semibold text-card-foreground mb-4"
+						>
+							Team Collaboration
+						</h3>
+						<p class="text-muted-foreground leading-relaxed">
+							Real-time collaboration tools that keep everyone
+							aligned, from brainstorming to project delivery.
+						</p>
+					</div>
+
+					<div
+						class="bg-card rounded-xl p-8 border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+					>
+						<div
+							class="bg-secondary/10 w-16 h-16 rounded-lg flex items-center justify-center mb-6"
+						>
+							<i
+								class="fas fa-shield-alt text-2xl text-secondary"
+							></i>
+						</div>
+						<h3
+							class="text-xl font-semibold text-card-foreground mb-4"
+						>
+							Enterprise Security
+						</h3>
+						<p class="text-muted-foreground leading-relaxed">
+							Bank-level security with SOC 2 compliance,
+							end-to-end encryption, and advanced access controls.
+						</p>
+					</div>
+
+					<div
+						class="bg-card rounded-xl p-8 border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+					>
+						<div
+							class="bg-accent/10 w-16 h-16 rounded-lg flex items-center justify-center mb-6"
+						>
+							<i
+								class="fas fa-mobile-alt text-2xl text-accent"
+							></i>
+						</div>
+						<h3
+							class="text-xl font-semibold text-card-foreground mb-4"
+						>
+							Mobile First
+						</h3>
+						<p class="text-muted-foreground leading-relaxed">
+							Native mobile apps for iOS and Android, so you can
+							manage your workflow from anywhere, anytime.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="testimonials" class="py-20 bg-muted">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="text-center mb-16">
+					<h2
+						class="text-3xl md:text-4xl font-bold text-foreground mb-4"
+					>
+						Trusted by 10,000+ Teams Worldwide
+					</h2>
+					<p class="text-xl text-muted-foreground">
+						See what our customers are saying about FlowSync
+					</p>
+				</div>
+
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+					<div
+						class="bg-background rounded-xl p-8 border border-border shadow-sm"
+					>
+						<div class="flex items-center mb-4">
+							<div class="flex text-primary">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</div>
+						</div>
+						<blockquote
+							class="text-foreground mb-6 leading-relaxed"
+						>
+							"FlowSync transformed our development process. We
+							shipped 40% faster and reduced bugs by 60%. It's
+							like having a project manager that never sleeps."
+						</blockquote>
+						<div class="flex items-center">
+							<img
+								src="/elevvo-internship-submission/sass-landing-page/placeholder-user.jpg"
+								alt="Sarah Chen"
+								class="w-12 h-12 rounded-full mr-4"
+							/>
+							<div>
+								<div class="font-semibold text-foreground">
+									Sarah Chen
+								</div>
+								<div class="text-sm text-muted-foreground">
+									CTO, TechFlow Inc.
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="bg-background rounded-xl p-8 border border-border shadow-sm"
+					>
+						<div class="flex items-center mb-4">
+							<div class="flex text-primary">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</div>
+						</div>
+						<blockquote
+							class="text-foreground mb-6 leading-relaxed"
+						>
+							"The AI automation features are incredible. Tasks
+							that used to take hours now happen automatically.
+							Our team can focus on what really matters."
+						</blockquote>
+						<div class="flex items-center">
+							<img
+								src="/elevvo-internship-submission/sass-landing-page/placeholder-user.jpg"
+								alt="Marcus Rodriguez"
+								class="w-12 h-12 rounded-full mr-4"
+							/>
+							<div>
+								<div class="font-semibold text-foreground">
+									Marcus Rodriguez
+								</div>
+								<div class="text-sm text-muted-foreground">
+									Product Manager, InnovateLab
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="bg-background rounded-xl p-8 border border-border shadow-sm"
+					>
+						<div class="flex items-center mb-4">
+							<div class="flex text-primary">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+							</div>
+						</div>
+						<blockquote
+							class="text-foreground mb-6 leading-relaxed"
+						>
+							"FlowSync's analytics gave us insights we never had
+							before. We identified bottlenecks and improved our
+							delivery time by 3x."
+						</blockquote>
+						<div class="flex items-center">
+							<img
+								src="/elevvo-internship-submission/sass-landing-page/placeholder-user.jpg"
+								alt="Emily Watson"
+								class="w-12 h-12 rounded-full mr-4"
+							/>
+							<div>
+								<div class="font-semibold text-foreground">
+									Emily Watson
+								</div>
+								<div class="text-sm text-muted-foreground">
+									Operations Director, ScaleUp Co.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="pricing" class="py-20 bg-background">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="text-center mb-16">
+					<h2
+						class="text-3xl md:text-4xl font-bold text-foreground mb-4"
+					>
+						Simple, Transparent Pricing
+					</h2>
+					<p class="text-xl text-muted-foreground">
+						Choose the plan that fits your team's needs
+					</p>
+				</div>
+
+				<div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+					<div
+						class="bg-card grid rounded-xl p-8 border border-border"
+					>
+						<div class="text-center mb-8">
+							<h3
+								class="text-xl font-semibold text-card-foreground mb-2"
+							>
+								Starter
+							</h3>
+							<div
+								class="text-3xl font-bold text-card-foreground mb-1"
+							>
+								$29
+							</div>
+							<div class="text-muted-foreground">
+								per user/month
+							</div>
+						</div>
+						<ul class="space-y-4 mb-8">
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Up to 10 team members</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Basic automation</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Standard integrations</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Email support</span
+								>
+							</li>
+						</ul>
+						<button
+							class="w-full bg-transparent text-muted-foreground py-3 rounded-lg font-semibold hover:bg-accent hover:text-accent-foreground"
+						>
+							Get Started
+						</button>
+					</div>
+
+					<div
+						class="bg-card rounded-xl p-8 border-2 border-primary relative"
+					>
+						<div
+							class="absolute -top-4 left-1/2 transform -translate-x-1/2"
+						>
+							<span
+								class="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold text-nowrap"
+							>
+								Most Popular
+							</span>
+						</div>
+						<div class="text-center mb-8">
+							<h3
+								class="text-xl font-semibold text-card-foreground mb-2"
+							>
+								Professional
+							</h3>
+							<div
+								class="text-3xl font-bold text-card-foreground mb-1"
+							>
+								$79
+							</div>
+							<div class="text-muted-foreground">
+								per user/month
+							</div>
+						</div>
+						<ul class="space-y-4 mb-8">
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Up to 50 team members</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Advanced AI automation</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>All integrations</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Priority support</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Advanced analytics</span
+								>
+							</li>
+						</ul>
+						<button
+							class="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold hover:bg-primary/90"
+						>
+							Start Free Trial
+						</button>
+					</div>
+
+					<div
+						class="bg-card rounded-xl p-8 border border-border grid"
+					>
+						<div class="text-center mb-8">
+							<h3
+								class="text-xl font-semibold text-card-foreground mb-2"
+							>
+								Enterprise
+							</h3>
+							<div
+								class="text-3xl font-bold text-card-foreground mb-1"
+							>
+								Custom
+							</div>
+							<div class="text-muted-foreground">contact us</div>
+						</div>
+						<ul class="space-y-4 mb-8">
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Unlimited team members</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Custom AI workflows</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Custom integrations</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>Dedicated support</span
+								>
+							</li>
+							<li class="flex items-center">
+								<i class="fas fa-check text-primary mr-3"></i>
+								<span class="text-card-foreground"
+									>On-premise deployment</span
+								>
+							</li>
+						</ul>
+						<button
+							class="w-full bg-transparent text-muted-foreground py-3 rounded-lg font-semibold hover:bg-accent hover:text-accent-foreground"
+						>
+							Contact Sales
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="py-20 bg-gradient-to-r from-primary to-secondary">
+			<div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+				<h2
+					class="text-3xl md:text-4xl font-bold text-primary-foreground mb-6"
+				>
+					Ready to Transform Your Workflow?
+				</h2>
+				<p
+					class="text-xl text-primary-foreground/90 mb-8 leading-relaxed"
+				>
+					Join thousands of teams who have already revolutionized
+					their productivity with FlowSync. Start your free trial
+					today and experience the difference.
+				</p>
+				<div class="flex flex-col sm:flex-row gap-4 justify-center">
+					<button
+						class="bg-background text-foreground px-8 py-4 rounded-lg text-lg font-semibold hover:bg-background/90"
+					>
+						Start Free Trial
+					</button>
+					<button
+						class="border-2 border-primary-foreground text-primary-foreground px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-foreground hover:text-primary"
+					>
+						Schedule Demo
+					</button>
+				</div>
+				<p class="text-sm text-primary-foreground/80 mt-6">
+					No credit card required • 14-day free trial • Cancel anytime
+				</p>
+			</div>
+		</section>
+
+		<footer class="bg-card border-t border-border py-12">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="grid md:grid-cols-4 gap-8">
+					<div>
+						<h3 class="text-2xl font-bold text-primary mb-4">
+							FlowSync
+						</h3>
+						<p class="text-muted-foreground mb-4">
+							Streamlining workflows for modern teams worldwide.
+						</p>
+						<div class="flex space-x-4">
+							<a
+								href="#"
+								class="text-muted-foreground hover:text-primary transition-colors"
+							>
+								<i class="fab fa-twitter text-xl"></i>
+							</a>
+							<a
+								href="#"
+								class="text-muted-foreground hover:text-primary transition-colors"
+							>
+								<i class="fab fa-linkedin text-xl"></i>
+							</a>
+							<a
+								href="#"
+								class="text-muted-foreground hover:text-primary transition-colors"
+							>
+								<i class="fab fa-github text-xl"></i>
+							</a>
+						</div>
+					</div>
+					<div>
+						<h4 class="font-semibold text-card-foreground mb-4">
+							Product
+						</h4>
+						<ul class="space-y-2">
+							<li>
+								<a
+									href="#features"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Features</a
+								>
+							</li>
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Integrations</a
+								>
+							</li>
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>API</a
+								>
+							</li>
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Security</a
+								>
+							</li>
+						</ul>
+					</div>
+					<div>
+						<h4 class="font-semibold text-card-foreground mb-4">
+							Company
+						</h4>
+						<ul class="space-y-2">
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>About</a
+								>
+							</li>
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Blog</a
+								>
+							</li>
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Careers</a
+								>
+							</li>
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Contact</a
+								>
+							</li>
+						</ul>
+					</div>
+					<div>
+						<h4 class="font-semibold text-card-foreground mb-4">
+							Support
+						</h4>
+						<ul class="space-y-2">
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Help Center</a
+								>
+							</li>
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Documentation</a
+								>
+							</li>
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Status</a
+								>
+							</li>
+							<li>
+								<a
+									href="#"
+									class="text-muted-foreground hover:text-primary transition-colors"
+									>Community</a
+								>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="border-t border-border mt-8 pt-8 text-center">
+					<p class="text-muted-foreground">
+						© 2025 FlowSync. All rights reserved.
+					</p>
+				</div>
+			</div>
+		</footer>
+
+	</body>
+</html>
